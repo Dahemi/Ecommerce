@@ -8,7 +8,8 @@ import multer from "multer";
 import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
-import { register } from "./controllers/auth.js";
+import authRoutes from "./Routes/auth.js";
+import { register } from "./Controllers/auth.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,7 +37,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/auth/register", upload.single("picture"), register);
+//Routes with files
+app.post("/auth/register", upload.single("picture"), register); //upload.single - middleware function
+
+//Routes
+app.use("/auth", authRoutes);
 
 //Mongoose setup
 const PORT = process.env.PORT || 6001;

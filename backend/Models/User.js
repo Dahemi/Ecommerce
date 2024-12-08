@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
+    //first object
     firstName: {
       type: String,
       required: true,
@@ -38,6 +39,7 @@ const UserSchema = new mongoose.Schema(
     viewdProfile: Number,
     impressions: Number,
   },
+  //second object, configuration for timestamps
   { timestamps: true }
 );
 
