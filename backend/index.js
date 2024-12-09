@@ -9,7 +9,11 @@ import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./Routes/auth.js";
+import userRoutes from "./Routes/users.js";
+import postRoutes from "./Routes/posts.js";
 import { register } from "./Controllers/auth.js";
+import { createPost } from "./Controllers/posts.js";
+import { verifyToken } from "./Middleware/auth.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,9 +43,12 @@ const upload = multer({ storage: storage });
 
 //Routes with files
 app.post("/auth/register", upload.single("picture"), register); //upload.single - middleware function
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 //Routes
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 
 //Mongoose setup
 const PORT = process.env.PORT || 6001;
