@@ -1,17 +1,24 @@
 import { Box } from "@mui/material";
 
-const UserImage = ({ image, size = "60px" }) => {
+function UserImage({ image }) {
+  const imagePath = `http://localhost:3001/assets/${image}`;
+  console.log("Full Image path:", imagePath);
   return (
-    <Box width={size} height={size}>
-      <img
-        style={{ objectFit: "cover", borderRadius: "50%" }}
-        width={size}
-        height={size}
-        src={`http://localhost:3001/public/assets/${image}`}
-        alt="User Image"
-      />
-    </Box>
+    <img
+      src={imagePath}
+      alt="User"
+      style={{
+        width: "100px",
+        height: "100px",
+        objectFit: "cover",
+      }}
+      onError={(e) => {
+        console.error("Image load error", e);
+        // Optional: set a default image or placeholder
+        e.target.src = "path/to/default/image.jpg";
+      }}
+    />
   );
-};
+}
 
 export default UserImage;

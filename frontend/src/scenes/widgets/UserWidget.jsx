@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import twitterIcon from "../../assets/twitter.png";
+import linkedinIcon from "../../assets/linkedin.png";
 
 function UserWidget({ userId, picturePath }) {
   const [user, setUser] = useState(null);
@@ -26,12 +28,26 @@ function UserWidget({ userId, picturePath }) {
     try {
       const response = await fetch(`http://localhost:3001/users/${userId}`, {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
+
       if (!response.ok) {
-        throw new Error("Failed to fetch user data");
+        const errorText = await response.text();
+        console.error("Response not OK:", response.status, errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        console.error("Unexpected content type:", text);
+        throw new Error("Received non-JSON response");
       }
       const data = await response.json();
+      console.log("User data:", data);
       setUser(data);
     } catch (error) {
       console.error("Error fetching user data:", error.message);
@@ -129,7 +145,7 @@ function UserWidget({ userId, picturePath }) {
 
         <FlexBetween gap="1rem" mb="0.5rem">
           <FlexBetween gap="1rem">
-            <img src="../../assets/twitter.png" alt="twitter" />
+            <img src={twitterIcon} alt="twitter" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Twitter
@@ -142,7 +158,7 @@ function UserWidget({ userId, picturePath }) {
 
         <FlexBetween gap="1rem">
           <FlexBetween gap="1rem">
-            <img src="../../assets/linkedin.png" alt="linkedin" />
+            <img src={linkedinIcon} alt="linkedin" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Linkedin

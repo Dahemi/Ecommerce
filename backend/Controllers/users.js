@@ -1,13 +1,33 @@
 import User from "../Models/User.js";
 
 //READ - user
-export const getUser = async (req, res) => {
+/*export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
     res.status(200).json({ status: "success", data: user });
   } catch (error) {
     res.status(404).json({ status: "error", message: error.message });
+  }
+};*/
+export const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "User not found" });
+    }
+
+    // Explicitly remove sensitive information
+    const { password, ...safeUserData } = user.toObject();
+
+    res.status(200).json(safeUserData);
+  } catch (error) {
+    console.error("Server-side error:", error);
+    res.status(500).json({ status: "error", message: error.message });
   }
 };
 
