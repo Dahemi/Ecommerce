@@ -1,7 +1,11 @@
+//Handles logic for authentication-related routes,
+//such as login, signup
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../Models/User.js";
 
+// Register a new user with hashed password and JWT token.
 export const register = async (req, res) => {
   try {
     const {
@@ -29,8 +33,33 @@ export const register = async (req, res) => {
       friends,
       location,
       occupation,
-      //viewdProfile,
-      //impressions,
+      viewdProfile: Math.floor(Math.random() * 10000),
+      impressions: Math.floor(Math.random() * 10000),
     });
-  } catch (err) {}
+
+    // Save the user to the database and
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+//Login
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid password" });
+
+    //Generates a JWT token for authenticated users.
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    delete user.password; //ensure password is not returned in response
+    res.status(200).json({ token, user });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
