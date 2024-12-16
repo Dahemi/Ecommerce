@@ -60,12 +60,12 @@ function PostsWidget({ userId, isProfile = false }) {
           <PostWidget
             key={_id}
             postId={_id}
-            postUseId={userId}
-            name={`${firstName} ${lastName} `}
-            desription={description}
-            loction={location}
-            picurePath={picturePath}
-            userPicurePath={userPicturePath}
+            postUserId={userId}
+            name={`${firstName} ${lastName}`}
+            description={description}
+            location={location}
+            picturePath={picturePath}
+            userPicturePath={userPicturePath}
             likes={likes}
             comments={comments}
           />

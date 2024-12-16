@@ -24,6 +24,11 @@ function UserWidget({ userId, picturePath }) {
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
 
+  // Use the friends from Redux store to ensure real-time updates
+  const friends = useSelector((state) =>
+    state.user?._id === userId ? state.user.friends : []
+  );
+
   const getUser = async () => {
     try {
       const response = await fetch(`http://localhost:3001/users/${userId}`, {
@@ -70,7 +75,6 @@ function UserWidget({ userId, picturePath }) {
     occupation,
     viewedProfile,
     impressions,
-    friends,
   } = user;
 
   return (

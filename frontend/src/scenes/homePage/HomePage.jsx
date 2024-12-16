@@ -4,7 +4,9 @@ import { Box, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 import UserWidget from "../widgets/UserWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
-
+import PostsWidget from "../widgets/PostsWidget";
+import AdvertWidget from "../widgets/AdvertWidget";
+import FriendListWidget from "../widgets/FriendListWidget";
 function HomePage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.user);
@@ -28,8 +30,15 @@ function HomePage() {
         >
           <MyPostWidget picturePath={picturePath} />
           {/*Post related data inserted here */}
+          <PostsWidget userId={_id} />
         </Box>
-        {isNonMobileScreens && <Box flexBasis="26%"></Box>}
+        {isNonMobileScreens && (
+          <Box flexBasis="26%">
+            <AdvertWidget />
+            <Box m="2rem 0" />
+            <FriendListWidget userId={_id} />
+          </Box>
+        )}
       </Box>
     </Box>
   );
