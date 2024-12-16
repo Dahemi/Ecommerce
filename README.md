@@ -1,6 +1,6 @@
-# Ecommerce Application
+# Social Media Application
 
-Welcome to the **Ecommerce Application**! 🎉
+Welcome to the **SOCIOPEDIA**! 🎉
 
 This project is a full-stack web application built with **React**, **Vite**, and **Express.js**. It provides a dynamic platform for users to register, log in, create posts, and interact with others in a social media-like environment.
 
