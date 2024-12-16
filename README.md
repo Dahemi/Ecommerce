@@ -50,51 +50,6 @@ This project is a full-stack web application built with **React**, **Vite**, and
 
 ---
 
-## 📥 Installation
-
-Follow these steps to set up the application locally:
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-repo/ecommerce-app.git
-   cd ecommerce-app
-   ```
-
-2. **Install dependencies:**
-   - Frontend:
-     ```bash
-     cd client
-     npm install
-     ```
-   - Backend:
-     ```bash
-     cd server
-     npm install
-     ```
-
-3. **Configure environment variables:**
-   Create a `.env` file in the `server` directory with the following:
-   ```env
-   PORT=3000
-   MONGO_URI=*****
-   JWT_SECRET=*****
-   ```
-
-4. **Start the application:**
-   - Frontend:
-     ```bash
-     cd client
-     npm run dev
-     ```
-   - Backend:
-     ```bash
-     cd server
-     npm start
-     ```
-
-5. **Access the app:** Open your browser and navigate to `http://localhost:3000`.
-
----
 
 ## 🚀 Usage
 
