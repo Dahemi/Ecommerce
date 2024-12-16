@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 // Define the initial state for the auth slice
 const initialState = {
   mode: "light", // Theme mode (light or dark)
-  user: null, // User information
+  user: {
+    friends: [], // Ensure friends is always an array
+  },
   token: null, // Authentication token
   posts: [], // Array to store posts
 };
@@ -30,7 +32,7 @@ export const authSlice = createSlice({
     // Reducer to update user's friends list
     setFriends: (state, action) => {
       if (state.user) {
-        state.user.friends = action.payload.friends;
+        state.user.friends = action.payload.friends || [];
       } else {
         console.error("user friends non-existent :(");
       }
